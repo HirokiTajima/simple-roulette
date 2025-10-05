@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm start)",
+      "Bash(set PORT=3001)",
+      "Bash($env:PORT=3001)",
+      "Bash(PORT=3001 npm start)",
+      "Bash(npm install:*)",
+      "Bash(PORT=3002 npm start)",
+      "Bash(npm uninstall:*)",
+      "Bash(taskkill:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
