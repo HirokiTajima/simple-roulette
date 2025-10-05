@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Edit3, X, Plus, Minus } from 'lucide-react';
+import { Volume2, VolumeX, Edit3, X, Plus, Minus, ShieldCheck } from 'lucide-react';
 
 export default function SimpleRouletteApp() {
   const [items, setItems] = useState([
@@ -19,6 +19,22 @@ export default function SimpleRouletteApp() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [authAddress, setAuthAddress] = useState<string | null>(null);
+
+  // Check for authentication status
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedAuth = localStorage.getItem('wallet_auth');
+      if (savedAuth) {
+        try {
+          const authData = JSON.parse(savedAuth);
+          setAuthAddress(authData.address);
+        } catch (e) {
+          console.error('Failed to parse saved auth:', e);
+        }
+      }
+    }
+  }, []);
 
   const spinRoulette = () => {
     if (isSpinning) return;
@@ -87,6 +103,14 @@ export default function SimpleRouletteApp() {
   if (isEditing) {
     return (
       <div className="min-h-screen bg-slate-800 text-white p-4">
+        {/* Verified Badge */}
+        {authAddress && (
+          <div className="fixed top-4 right-4 bg-green-500/20 border border-green-500 rounded-full px-4 py-2 flex items-center gap-2 backdrop-blur-sm z-50">
+            <ShieldCheck size={18} className="text-green-400" />
+            <span className="text-sm text-green-300">Verified</span>
+          </div>
+        )}
+
         <div className="flex items-center justify-between mb-4 pt-2">
           <h2 className="text-xl font-bold">Edit Items</h2>
           <button
@@ -198,6 +222,14 @@ export default function SimpleRouletteApp() {
 
   return (
     <div className="min-h-screen bg-slate-800 text-white flex flex-col items-center justify-center p-4 relative">
+      {/* Verified Badge */}
+      {authAddress && (
+        <div className="fixed top-4 right-4 bg-green-500/20 border border-green-500 rounded-full px-4 py-2 flex items-center gap-2 backdrop-blur-sm z-50">
+          <ShieldCheck size={18} className="text-green-400" />
+          <span className="text-sm text-green-300">Verified</span>
+        </div>
+      )}
+
       <div className="relative mb-8">
         {showConfetti && (
           <div className="absolute inset-0 pointer-events-none overflow-visible z-30">

@@ -3,13 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Providers from './Providers';
+import VerifyGate from './VerifyGate';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Providers>
+      <VerifyGate>
+        <App />
+      </VerifyGate>
+    </Providers>
   </React.StrictMode>
 );
 
